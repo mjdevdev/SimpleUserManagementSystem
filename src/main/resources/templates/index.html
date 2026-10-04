@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple User Management</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center px-4">
+
+<main class="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md text-center">
+    <h1 class="text-3xl font-bold text-slate-800 mb-2">Simple User Management</h1>
+    <p class="text-slate-500 mb-8">Spring Boot + Spring Security + Tailwind</p>
+
+    <div th:if="${loggedIn}" class="space-y-3">
+        <p class="text-slate-600 mb-4">You are logged in.</p>
+        <a th:href="@{/me}"
+           class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition">
+            Go to my page
+        </a>
+    </div>
+
+    <div th:unless="${loggedIn}" class="space-y-3">
+        <a th:href="@{/login}"
+           class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition">
+            Log in
+        </a>
+        <a th:href="@{/register}"
+           class="block w-full bg-white hover:bg-slate-50 text-indigo-600 font-semibold py-2.5 rounded-lg border border-indigo-200 transition">
+            Register
+        </a>
+    </div>
+</main>
+
+</body>
+</html>

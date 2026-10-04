@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin dashboard - Simple User Management</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="bg-slate-100 min-h-screen py-10 px-4">
+
+<main class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-6xl mx-auto">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-slate-800">Admin dashboard</h1>
+        <form th:action="@{/admin/logout}" method="post">
+            <button type="submit"
+                    class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition">
+                Log off
+            </button>
+        </form>
+    </div>
+
+    <p th:if="${param.saved}"
+       class="mb-4 text-sm text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2">
+        User saved.
+    </p>
+    <p th:if="${param.deleted}"
+       class="mb-4 text-sm text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2">
+        User deleted.
+    </p>
+    <p th:if="${param['delete-denied']}"
+       class="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2">
+        Administrators cannot delete other administrators (including themselves).
+        Revoke admin rights on the edit page first.
+    </p>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left border-collapse">
+            <thead>
+            <tr class="text-slate-500 uppercase tracking-wide border-b-2 border-slate-200">
+                <th class="py-2 px-2">ID</th>
+                <th class="py-2 px-2">Username</th>
+                <th class="py-2 px-2">Nickname</th>
+                <th class="py-2 px-2">Email</th>
+                <th class="py-2 px-2">Password hash</th>
+                <th class="py-2 px-2">Role</th>
+                <th class="py-2 px-2">Admin</th>
+                <th class="py-2 px-2">Enabled</th>
+                <th class="py-2 px-2">Provider</th>
+                <th class="py-2 px-2">OAuth2 handle</th>
+                <th class="py-2 px-2">Created</th>
+                <th class="py-2 px-2">Last login</th>
+                <th class="py-2 px-2">Last logoff</th>
+                <th class="py-2 px-2"></th>
+            </tr>
+            </thead>
+            <tbody class="text-slate-700">
+            <tr th:each="u : ${users}" class="border-b border-slate-100 hover:bg-slate-50">
+                <td class="py-2 px-2 font-mono" th:text="${u.id}">id</td>
+                <td class="py-2 px-2 font-semibold" th:text="${u.username}">username</td>
+                <td class="py-2 px-2" th:text="${u.nickname != null ? u.nickname : '—'}">nickname</td>
+                <td class="py-2 px-2" th:text="${u.email != null ? u.email : '—'}">email</td>
+                <td class="py-2 px-2 font-mono text-slate-400"
+                    th:text="${u.password != null ? #strings.abbreviate(u.password, 14) : '—'}">hash</td>
+                <td class="py-2 px-2" th:text="${u.role}">role</td>
+                <td class="py-2 px-2" th:text="${u.admin ? '✓' : '—'}">admin</td>
+                <td class="py-2 px-2" th:text="${u.enabled ? '✓' : '—'}">enabled</td>
+                <td class="py-2 px-2" th:text="${u.oauth2Provider != null ? u.oauth2Provider : '—'}">provider</td>
+                <td class="py-2 px-2 font-mono" th:text="${u.oauth2Handle != null ? u.oauth2Handle : '—'}">handle</td>
+                <td class="py-2 px-2 whitespace-nowrap" th:text="${u.createdAt}">created</td>
+                <td class="py-2 px-2 whitespace-nowrap" th:text="${u.lastLogin}">last login</td>
+                <td class="py-2 px-2 whitespace-nowrap" th:text="${u.lastLogoff}">last logoff</td>
+                <td class="py-2 px-2 whitespace-nowrap">
+                    <a th:href="@{'/admin/users/{id}'(id=${u.id})}"
+                       class="text-indigo-600 hover:underline font-semibold">Edit</a>
+                    <form th:action="@{'/admin/users/{id}/delete'(id=${u.id})}" method="post"
+                          class="inline ml-2"
+                          onsubmit="return confirm('Delete this user permanently?')">
+                        <button type="submit"
+                                class="text-red-600 hover:underline font-semibold">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+</body>
+</html>

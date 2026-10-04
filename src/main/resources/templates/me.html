@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My page - Simple User Management</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center px-4">
+
+<main class="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md">
+    <div class="text-center mb-8">
+        <img th:if="${user != null && user.avatarUrl != null}"
+             th:src="${user.avatarUrl}"
+             alt="avatar"
+             class="w-20 h-20 rounded-full mx-auto mb-3 border border-slate-200">
+        <h1 class="text-2xl font-bold text-slate-800"
+            th:text="${user != null && user.nickname != null ? user.nickname : authName}">
+            nickname
+        </h1>
+        <p class="text-slate-500" th:text="${user != null ? user.username : authName}">username</p>
+    </div>
+
+    <dl class="text-sm space-y-2 mb-8" th:if="${user != null}">
+        <div class="flex justify-between border-b border-slate-100 pb-2">
+            <dt class="text-slate-500">User ID</dt>
+            <dd class="font-mono text-slate-700" th:text="${user.id}">id</dd>
+        </div>
+        <div class="flex justify-between border-b border-slate-100 pb-2">
+            <dt class="text-slate-500">Email</dt>
+            <dd class="text-slate-700" th:text="${user.email != null ? user.email : '—'}">email</dd>
+        </div>
+        <div class="flex justify-between border-b border-slate-100 pb-2">
+            <dt class="text-slate-500">Role</dt>
+            <dd class="text-slate-700" th:text="${user.role}">role</dd>
+        </div>
+        <div class="flex justify-between border-b border-slate-100 pb-2">
+            <dt class="text-slate-500">Login method</dt>
+            <dd class="text-slate-700"
+                th:text="${user.oauth2Provider != null ? user.oauth2Provider : 'username / password'}">
+                method
+            </dd>
+        </div>
+        <div class="flex justify-between border-b border-slate-100 pb-2">
+            <dt class="text-slate-500">Created at</dt>
+            <dd class="text-slate-700" th:text="${createdAt}">created</dd>
+        </div>
+        <div class="flex justify-between border-b border-slate-100 pb-2">
+            <dt class="text-slate-500">Last login</dt>
+            <dd class="text-slate-700" th:text="${lastLogin}">last login</dd>
+        </div>
+        <div class="flex justify-between border-b border-slate-100 pb-2">
+            <dt class="text-slate-500">Last logoff</dt>
+            <dd class="text-slate-700" th:text="${lastLogoff}">last logoff</dd>
+        </div>
+    </dl>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit"
+                class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-lg transition">
+            Log off
+        </button>
+    </form>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page not found - Simple User Management</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center px-4">
+
+<main class="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md text-center">
+    <p class="text-6xl font-bold text-indigo-600 mb-4" th:text="${status != null ? status : '404'}">404</p>
+    <h1 class="text-2xl font-bold text-slate-800 mb-2">Page not found</h1>
+    <p class="text-slate-500 mb-8">
+        The page you are looking for does not exist or an error occurred
+        <span th:if="${error != null}">(<span th:text="${error}">error</span>)</span>.
+    </p>
+    <a th:href="@{/}"
+       class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition">
+        Back to home
+    </a>
+</main>
+
+</body>	
+</html>

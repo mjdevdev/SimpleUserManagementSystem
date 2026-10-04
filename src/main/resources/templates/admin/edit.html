@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit user - Admin panel</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center px-4 py-10">
+
+<main class="bg-white shadow-lg rounded-2xl p-10 w-full max-w-lg">
+    <h1 class="text-2xl font-bold text-slate-800 mb-1">Edit user</h1>
+    <p class="text-sm text-slate-500 mb-6">
+        <span class="font-mono" th:text="${user.id}">id</span>
+        · <span th:text="${user.oauth2Provider != null ? 'OAuth2: ' + user.oauth2Provider + ' (' + user.oauth2Handle + ')' : 'local account'}">method</span>
+    </p>
+
+    <p th:if="${error}"
+       class="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2"
+       th:text="${error}">
+        error
+    </p>
+
+    <form th:action="@{'/admin/users/{id}'(id=${user.id})}" method="post" class="space-y-4">
+        <div>
+            <label for="username" class="block text-sm font-medium text-slate-700 mb-1">Username</label>
+            <input type="text" id="username" name="username" required minlength="3" maxlength="50"
+                   th:value="${form.username}"
+                   class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+        <div>
+            <label for="nickname" class="block text-sm font-medium text-slate-700 mb-1">Nickname</label>
+            <input type="text" id="nickname" name="nickname" maxlength="100"
+                   th:value="${form.nickname}"
+                   class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+        <div>
+            <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+            <input type="email" id="email" name="email"
+                   th:value="${form.email}"
+                   class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+        <div>
+            <label for="password" class="block text-sm font-medium text-slate-700 mb-1">New password</label>
+            <input type="password" id="password" name="password" minlength="8"
+                   placeholder="leave blank to keep current password"
+                   class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+        <div class="flex gap-3 pt-2">
+            <button type="submit"
+                    class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition">
+                Save
+            </button>
+            <a th:href="@{/admin}"
+               class="flex-1 text-center bg-white hover:bg-slate-50 text-slate-700 font-semibold py-2.5 rounded-lg border border-slate-300 transition">
+                Cancel
+            </a>
+        </div>
+    </form>
+
+    <dl class="text-sm mt-8 pt-6 border-t border-slate-200 space-y-2">
+        <div class="flex justify-between">
+            <dt class="text-slate-500">Role / admin</dt>
+            <dd class="text-slate-700" th:text="${user.admin ? user.role + ' (admin)' : user.role}">role</dd>
+        </div>
+        <div class="flex justify-between">
+            <dt class="text-slate-500">Created at</dt>
+            <dd class="text-slate-700" th:text="${createdAt}">created</dd>
+        </div>
+        <div class="flex justify-between">
+            <dt class="text-slate-500">Last login</dt>
+            <dd class="text-slate-700" th:text="${lastLogin}">last login</dd>
+        </div>
+        <div class="flex justify-between">
+            <dt class="text-slate-500">Last logoff</dt>
+            <dd class="text-slate-700" th:text="${lastLogoff}">last logoff</dd>
+        </div>
+    </dl>
+</main>
+
+</body>
+</html>
