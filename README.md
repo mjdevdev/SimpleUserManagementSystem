@@ -2,6 +2,13 @@
 
 A minimal full-stack user management system built with Spring Boot. It provides username/password registration and login, Google OAuth2 sign-in with a register-first flow, an administrative panel for account management, and automatic database schema creation on startup.
 
+live demo: https://consultants-hardcover-evaluated-gmc.trycloudflare.com 
+Hosted at my home NAS server, optimally 24/7 but may subject to indefinite downtimes.
+
+#### admin account: 
+username: admin
+password: 12345678
+
 ## Technology Stack
 
 | Layer      | Technology                                              |
