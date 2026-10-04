@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * CREATE TABLE IF NOT EXISTS never alters an existing table, so the `admin`
  * column is added here for databases created before it existed.
  */
-@Component
+/*@Component*/
 public class AdminColumnMigration implements ApplicationRunner {
 
     private final JdbcClient jdbc;
