@@ -134,6 +134,10 @@
 	<profiles>
 		<profile>
 			<id>release</id>
+			<properties>
+				<!-- stable jar name so the Dockerfile can COPY it without version pinning -->
+				<project.build.finalName>simpleusermanagement</project.build.finalName>
+			</properties>
 			<build>
 				<resources>
 					<resource>
